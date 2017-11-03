@@ -1,0 +1,80 @@
+import java.applet.Applet;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+//8-23-17
+//Rose Moskowitz
+public class Tree extends Applet implements MouseListener {
+	public double scale= .25;
+	public int orignalSize;
+	public int leafSize;
+	public double rescale;
+	public void init(){
+		this.setSize(500,500);
+		this.setBackground(Color.lightGray);
+		this.addMouseListener(this);
+	}
+	
+
+public void paint (Graphics g){
+	orignalSize =50;
+	leafSize =(int) (orignalSize*scale);
+	rescale = 0.5*(scale-1)*orignalSize;
+	//ground
+	g.setColor(Color.darkGray);
+	g.fillRect(0, 450, 500, 50);
+	//trunk
+	g.setColor(Color.black);
+	g.fillRect(235, 250, 40, 200);
+	//leaves
+	g.setColor(Color.darkGray);
+	g.fillOval((int) (200-rescale), (int) (225-rescale), leafSize, leafSize);
+	g.fillOval((int) (220-rescale), (int) (225-rescale), leafSize, leafSize);
+	g.fillOval((int) (240-rescale), (int) (200-rescale), leafSize, leafSize);
+	g.fillOval((int) (230-rescale), (int) (210-rescale), leafSize, leafSize);
+	g.fillOval((int) (245-rescale), (int) (230-rescale), leafSize, leafSize);
+	g.fillOval((int) (200-rescale), (int) (185-rescale), leafSize, leafSize);
+	g.fillOval((int) (220-rescale), (int) (185-rescale), leafSize, leafSize);
+	g.fillOval((int) (250-rescale), (int) (175-rescale), leafSize, leafSize);
+	g.fillOval((int) (260-rescale), (int) (210-rescale), leafSize, leafSize);
+	g.fillOval((int) (215-rescale), (int) (160-rescale), leafSize, leafSize);
+	//moon
+	g.setColor(Color.white);
+	g.fillOval(100, 50,75, 75);
+	//hole w/ eyes
+	g.setColor(Color.darkGray);
+	g.fillOval(241, 325, 25, 25);
+	g.setColor(Color.red);
+	g.fillOval(246, 332, 5, 5);
+	g.fillOval(256, 332, 5, 5);
+}
+@Override
+public void mouseClicked(MouseEvent arg0) {
+	// TODO Auto-generated method stub
+	scale++;
+	repaint();
+}
+@Override
+public void mouseEntered(MouseEvent arg0) {
+	// TODO Auto-generated method stub
+	scale--;
+	repaint();
+}
+@Override
+public void mouseExited(MouseEvent arg0) {
+	// TODO Auto-generated method stub
+	
+}
+@Override
+public void mousePressed(MouseEvent arg0) {
+	// TODO Auto-generated method stub
+	
+}
+@Override
+public void mouseReleased(MouseEvent arg0) {
+	// TODO Auto-generated method stub
+	
+}
+}
