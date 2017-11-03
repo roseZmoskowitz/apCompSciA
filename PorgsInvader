@@ -1,0 +1,27 @@
+import java.awt.Graphics;
+
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.ImageObserver;
+
+public class PorgsRunnable {
+	double x, y, vx, vy;
+	Image porgs;
+	
+	public  PorgsRunnable (int startX, int startY){
+		this.x = startX;
+		this.y= startY;
+		this.vx=Math.random()*20;
+		this.vy=Math.random()*20;
+		this.porgs = Toolkit.getDefaultToolkit().getImage("PorgsGame.png");
+	}
+	
+	public void update(){
+		this.x += vx;
+		this.y += vy;
+	}
+	
+	public void paint (Graphics g, ImageObserver io){
+		g.drawImage(this.porgs, (int)this.x, (int)this.y, 50,75, io);
+	}
+}
