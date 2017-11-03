@@ -1,0 +1,45 @@
+import java.awt.Color;
+
+import java.awt.Graphics;
+
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+
+public class PorgsInvader extends JComponent implements Runnable {
+
+	PorgsRunnable porgs;
+	
+	public PorgsInvader() {	
+		porgs = new PorgsRunnable(100,100); 
+		Thread t = new Thread(this);
+		t.start();
+	}
+	
+	public void paint(Graphics g) {
+		porgs.paint(g,  this);
+	}
+	
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("Porgs Invader");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(700, 700);
+		frame.setVisible(true);
+		frame.add(new PorgsInvader());
+		frame.getContentPane().setBackground(Color.black);
+	}
+	
+	@Override
+	public void run() {
+		while(true) {
+
+			repaint();
+			try {
+				Thread.sleep(30);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+}
