@@ -1,21 +1,35 @@
 import java.awt.Color;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-public class PorgsInvader extends JComponent implements Runnable {
+public class PorgsInvader extends JComponent implements Runnable, MouseListener {
 
 	PorgsRunnable porgs;
+	double x, y, vx, vy;
+	int startPos=0;
+	ArrayList<PorgsRunnable>porgsMultiples = new ArrayList<PorgsRunnable>(); //stores the Porgs
 	
 	public PorgsInvader() {	
-		porgs = new PorgsRunnable(100,100); 
+		for (int i=0; i<5; i++){
+			porgsMultiples.add(new PorgsRunnable(startPos,0)); //adds a new porg
+			startPos+=10; //shifts the starting position
+		}
+		porgs = new PorgsRunnable(0,0); 
+		this.addMouseListener(this);
 		Thread t = new Thread(this);
 		t.start();
 	}
 	
 	public void paint(Graphics g) {
+		for (int i=0; i<porgsMultiples.size();i++){
+			porgsMultiples.get(i).paint(g, this);
+		}
 		porgs.paint(g,  this);
 	}
 	
@@ -40,6 +54,36 @@ public class PorgsInvader extends JComponent implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
