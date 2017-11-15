@@ -5,12 +5,15 @@ import java.awt.Toolkit;
 import java.awt.image.ImageObserver;
 
 public class PorgsRunnable {
-	double x, y, vx, vy;
+	double x, y, vx, vy, intX, intY;
 	Image porgs;
+	//int imageNum=0;
 	
 	public  PorgsRunnable (int startX, int startY){
 		this.x = startX; //starting x position
 		this.y= startY; //starting y position
+		this.intX = startX; //starting x position (stored)
+		this.intY= startY; //starting y position (stored)
 		this.vx=5;	//starting vertical velocity
 		this.vy=0;	//starting horizontal velocity
 		this.porgs = Toolkit.getDefaultToolkit().getImage("PorgsGame.png"); //download Porgs religion
@@ -20,10 +23,15 @@ public class PorgsRunnable {
 		this.x += vx; //x position changes based on  x velocity
 		this.y += vy; //y position changes based on y velocity
 		
-		if (x>700){ //image is the furthest right it can be seen on screen
+		//if (x>100 && x<106){ //image is the furthest right it can be seen on screen
+		//	imageNum ++;
+		//	System.out.println(imageNum);
+		//} 
+
+		if (x>intX+400){ //image is the furthest right it can be seen on screen
 			vx=0-vx; //reverses horizontal velocity
 			y+= 100; //moves image down the screen
-		} else if (x<0){ //image is furthest left it can be seen on screen
+		} else if (x<intX){ //image is furthest left it can be seen on screen
 			vx= Math.abs(vx); //reverses horizontal velocity
 			y+= 100; //moves image down the screen
 		} else if (y>700){ //image is furtherest down on the screen it can be
