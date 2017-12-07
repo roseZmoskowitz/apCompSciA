@@ -1,0 +1,44 @@
+package _pasted_code_;
+
+import java.awt.Graphics;
+
+import java.awt.Image;
+import java.awt.Toolkit;
+//import java.awt.event.KeyEvent;
+import java.awt.image.ImageObserver;
+//import java.awt.event.KeyEvent;
+//import java.awt.event.KeyListener;
+
+public class Player {
+	double playerX, playerY, lives, playerVX, playerVY;
+	Image player;
+	
+	public Player (int startX, int startY){
+		this.playerX=300;
+		this.playerY=511;
+		this.playerVX=5;
+		this.playerVY=0;
+		this.player = Toolkit.getDefaultToolkit().getImage("PorgsPlayer.png"); //download player image
+	}
+	
+	public void moveLeft(){
+		this.playerX-=playerVX;
+		if(playerX<0){
+			playerX=0;
+		}
+		
+	}
+	
+	public void moveRight(){
+		this.playerX+=playerVX;
+		if(playerX>375){
+			playerX=375;
+		}
+		
+	}
+	
+	public void paint (Graphics g, ImageObserver io){
+		g.drawImage(this.player, (int)this.playerX, (int)this.playerY, 100, 150, io);
+	}
+	
+}
