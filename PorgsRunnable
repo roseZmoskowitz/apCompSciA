@@ -2,33 +2,33 @@ import java.awt.Graphics;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.image.ImageObserver;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class PorgsRunnable {
-	double x, y, vx, vy, intX, intY;
-	Image porgs;
-	//int imageNum=0;
+	double x, y, vx, vy, intX, intY, playerX, playerY, lives;
+	Image porgs, player;
 	
 	public  PorgsRunnable (int startX, int startY){
-		this.x = startX; //starting x position
-		this.y= startY; //starting y position
-		this.intX = startX; //starting x position (stored)
-		this.intY= startY; //starting y position (stored)
-		this.vx=5;	//starting vertical velocity
-		this.vy=0;	//starting horizontal velocity
-		this.porgs = Toolkit.getDefaultToolkit().getImage("PorgsGame.png"); //download Porgs religion
+		this.x = startX; //Porg starting x position
+		this.y= startY; //Porg starting y position
+		this.intX = startX; //Porg starting x position (stored)
+		this.intY= startY; //Porg starting y position (stored)
+		this.vx=5;	//Porg starting vertical velocity
+		this.vy=0;	//Porg starting horizontal velocity
+		this.playerX=300;
+		this.playerY=510;
+		//this.player = Toolkit.getDefaultToolkit().getImage("PorgsPlayer.png"); //download player image
+		this.porgs = Toolkit.getDefaultToolkit().getImage("PorgsGame.png"); //download Porgs images
 	}
 	
 	public void update(){
 		this.x += vx; //x position changes based on  x velocity
 		this.y += vy; //y position changes based on y velocity
-		
-		//if (x>100 && x<106){ //image is the furthest right it can be seen on screen
-		//	imageNum ++;
-		//	System.out.println(imageNum);
-		//} 
 
-		if (x>intX+400){ //last image is the furthest right it can be seen on screen, each other is their starting image behind
+		if (x>intX+375){ //last image is the furthest right it can be seen on screen, each other is their starting image behind
 			vx=0-vx; //reverses horizontal velocity
 			y+= 100; //moves image down the screen
 		} else if (x<intX){ //first image is furthest left it can be seen on screen, each other is their starting distance behind
@@ -37,6 +37,15 @@ public class PorgsRunnable {
 		} else if (y>700){ //image is furtherest down on the screen it can be
 			vy=0-vy;
 		}
+		
+	}
+	
+	public void paint (Graphics g, ImageObserver io){
+		//g.drawImage(this.player, (int)this.playerX, (int)this.playerY, 100, 150, io);
+		g.drawImage(this.porgs, (int)this.x, (int)this.y, 50,75, io);
+	}
+}
+
 	}
 	
 	public void paint (Graphics g, ImageObserver io){
