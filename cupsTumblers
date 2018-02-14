@@ -1,0 +1,36 @@
+public class Tumblr extends Cup {
+
+	public Tumblr(String str1, int n) {
+		super(str1, n);
+		handle = false;
+	}
+
+	public void dropCup(){
+		System.out.println(name + " was dropped. It did not break.");
+	}
+	
+	public void breakCup(){
+		System.out.println("You cannot break " + name +".");
+	}
+	
+	public void fillCup(double n){
+		if(n<0 || currentFluid+n>=maxFluid){
+			currentFluid=0.8*maxFluid;
+		} else {
+			currentFluid+=n;
+			currentFluid*=0.8;
+		}
+		System.out.println("You filled " + name + ". It now contains " + currentFluid + " ounces of fluid.");
+	}
+	
+	public void emptyCup(double n){
+		if(n<0 || currentFluid-n<=0){
+			currentFluid=0;
+		} else {
+			currentFluid-=n;
+			currentFluid*=0.8;
+		}
+		System.out.println("You emptied " + name + ". It now contains " + currentFluid + " ounces of fluid.");
+	}
+	
+}
