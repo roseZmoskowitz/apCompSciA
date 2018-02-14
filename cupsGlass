@@ -1,0 +1,12 @@
+public class Glass extends Cup  {
+
+	public Glass(String str1, int n) {
+		super(str1, n);
+	}
+	
+	public void dropCup(){
+		System.out.println("You dropped " + name + ".");
+		if(Math.random()<=0.8) breakCup();
+	}
+}
+
