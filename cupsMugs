@@ -1,0 +1,7 @@
+public class Mug extends Cup {
+
+	public Mug(String str1, int n) {
+		super(str1, n);
+		
+	}
+}
