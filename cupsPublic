@@ -1,0 +1,41 @@
+public class Cup {
+	public String name, color = "";
+	public int serial;
+	public boolean handle, broken = false;
+	public double currentFluid, maxFluid;
+	
+	public void fillCup(double n){
+		if(n<0 || currentFluid+n>=maxFluid){
+			currentFluid=maxFluid;
+		} else {
+			currentFluid+=n;
+		}
+		System.out.println("You filled " + name + ". It now contains " + currentFluid + " ounces of fluid.");
+	}
+	
+	public void emptyCup(double n){
+		if(n<0 || currentFluid-n<=0){
+			currentFluid=0;
+		} else {
+			currentFluid-=n;
+		}
+		System.out.println("You emptied " + name + ". It now contains " + currentFluid + " ounces of fluid.");
+	}
+	
+	public void dropCup(){
+		System.out.println("You dropped " + name + ".");
+		if(Math.random()<=0.2){ 
+			breakCup();
+		}
+	}
+	
+	public void breakCup(){
+		broken = true;
+		System.out.println("You broke " + name +"!");
+	}
+	
+	public Cup(String str1, int n){
+		name = str1;
+		serial = n;
+	}
+}
