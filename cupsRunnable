@@ -1,0 +1,243 @@
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Scanner;
+
+public class CupRunnable {
+	
+	static boolean returningCustomer = false;
+	static ArrayList<Cup> CupList = new ArrayList<Cup>();
+	static Scanner scan = new Scanner(System.in);
+
+	public static void main(String[] args){
+		menu();
+	}
+	
+	public static void menu() {
+		if(returningCustomer==false){
+			System.out.println("Hello! Welcome to my cup shop. Buy my cups.");
+			returningCustomer=true;
+		} else {
+			System.out.println("What else, you filthy cupmonger?");
+		}
+		System.out.println("     1. Buy");
+		System.out.println("     2. Sell");
+		System.out.println("     3. Maintenance");
+		System.out.println("     4. Inventory report");
+		System.out.println("     5. Logout");
+		
+		int n = scan.nextInt();
+		if(n!=5){
+			switch(n){
+			case 1:
+				buy();
+				break;
+			case 2:
+				sell();
+				break;
+			case 3:
+				maintenance();
+				break;
+			case 4:
+				inventory();
+				break;
+			default:
+				System.out.println("That is not a valid option.");
+				menu();
+				break;
+			}
+		} else {
+		System.out.println("Goodbye.");
+		scan.close();
+		}
+	}
+	
+	public static void buy(){
+		System.out.println("What type of cup would you like to buy? (Mug--1, Glass--2, or Tumbler--3)");
+		int n = scan.nextInt();
+		if(n<4){
+			switch(n){
+			case 1:
+				buyMug();
+				break;
+			case 2:
+				buyGlass();
+			case 3:
+				buyTumbler();
+			}
+		} else {
+			System.out.println("That is not a valid option.");
+			buy();
+		}
+	}
+	
+	public static void sell(){
+		if(CupList.size()==0){
+			System.out.println("You have no cups to sell!");
+		} else {
+			System.out.println("Which cup would you like to sell?");
+			for(int i = 0; i<CupList.size(); i++){
+				System.out.println("     " + CupList.get(i).serial + ". " + CupList.get(i).name);
+			}
+			for(int i = 0; i<CupList.size(); i++){
+				if(scan.next().equals(CupList.get(i).name)){
+					System.out.println("You have sold " + CupList.get(i).name + ".");
+					CupList.remove(i);
+				}
+			}
+		}
+		menu();
+	}
+	
+	public static void maintenance(){
+		int activeCup = 0;
+		if(CupList.size()==0){
+			System.out.println("You have no cups to perform maintenance on!");
+			menu();
+		} else {
+			System.out.println("Which cup would you like to perform maintenance on?");
+			for(int i = 0; i<CupList.size(); i++){
+				System.out.println("     " + CupList.get(i).serial + ". " + CupList.get(i).name);
+			}
+			for(int i = 0; i<CupList.size(); i++){
+				if(scan.next().equals(CupList.get(i).name)){
+					System.out.println("What would you like to do with " + CupList.get(i).name + "?");
+					activeCup = i;
+					System.out.println("     1. Fill");
+					System.out.println("     2. Empty");
+					System.out.println("     3. Drop");
+					System.out.println("     4. Break");
+				}
+			}
+			int n = scan.nextInt();
+			if(n<5){
+				switch(n){
+				case 1:
+					fill(activeCup);
+					break;
+				case 2:
+					empty(activeCup);
+					break;
+				case 3:
+					drop(activeCup);
+					break;
+				case 4:
+					breakIt(activeCup);
+					break;
+				}	
+			} else {
+				System.out.println("That is not a valid option.");
+				maintenance();
+			}
+		}
+	}
+	
+	public static void fill(int n){
+		System.out.println("How much do you want to fill " + CupList.get(n).name +"?");
+		CupList.get(n).fillCup(scan.nextDouble());
+		menu();
+	}
+	
+	public static void empty(int n){
+		System.out.println("How much do you want to empty " + CupList.get(n).name +"?");
+		CupList.get(n).emptyCup(scan.nextDouble());
+		menu();
+	}
+
+	public static void drop(int n){
+		CupList.get(n).dropCup();
+		menu();
+	}
+
+	public static void breakIt(int n){
+		CupList.get(n).breakCup();
+		menu();
+	}
+	
+	public static void buyMug(){
+		System.out.println("What shall it be named? (Use different names for each cup. Max 8 characters)");
+		String name = scan.next();
+		System.out.println("Serial number?");
+		CupList.add(new Mug(name, scan.nextInt()));
+		System.out.println("Color?");
+		String colorMug = scan.next();
+		CupList.get(CupList.size()-1).color = colorMug;
+		System.out.println("Handle? (yes or no)");
+		if(scan.next().equals("yes")){
+			CupList.get(CupList.size()-1).handle = true;
+		} else {
+			CupList.get(CupList.size()-1).handle = false;
+		}
+		System.out.println("How much liquid will it hold?");
+		CupList.get(CupList.size()-1).maxFluid = scan.nextDouble();
+		menu();
+	}
+	
+	public static void buyTumbler(){
+		System.out.println("What shall it be named? (Use different names for each cup. Max 8 characters)");
+		String name = scan.next();
+		System.out.println("Serial number?");
+		CupList.add(new Tumblr(name, scan.nextInt()));
+		System.out.println("Color?");
+		String colorTumbler = scan.next();
+		CupList.get(CupList.size()-1).color = colorTumbler;
+		System.out.println("How much liquid will it hold?");
+		CupList.get(CupList.size()-1).maxFluid = scan.nextDouble();
+		menu();
+	}
+
+	public static void buyGlass(){
+		System.out.println("What shall it be named? (Use different names for each cup. Max 8 characters)");
+		String name = scan.next();
+		System.out.println("Serial number?");
+		CupList.add(new Glass(name, scan.nextInt()));
+		System.out.println("Color?");
+		String colorGlass = scan.next();
+		CupList.get(CupList.size()-1).color = colorGlass;
+		System.out.println("Handle? (yes or no)");
+		if(scan.next().equals("yes")){
+			CupList.get(CupList.size()-1).handle = true;
+		} else {
+			CupList.get(CupList.size()-1).handle = false;
+		}
+		System.out.println("How much liquid will it hold?");
+		CupList.get(CupList.size()-1).maxFluid = scan.nextDouble();
+		menu();
+	}
+	
+	public static String format(String str1, String str2){
+		//returns a string of spaces based on the name of the cup (str1) and the name of the column (str2)
+		String ans = new String("");
+		for(int i = 0; i<8+str2.length()-str1.length(); i++){
+			ans+=(" ");
+		}
+		return ans;
+	}
+	
+	public static void inventory(){
+		System.out.println("Name        Serial        Color        Fluid        Handle        Broken");
+		for(int i = 0; i<CupList.size(); i++){
+			String hasHandle = "";
+			String isBroken = "";
+			if(CupList.get(i).broken){
+				isBroken = "yes";
+			} else {
+				isBroken = "no";
+			}
+			if(CupList.get(i).handle){
+				hasHandle = "yes";
+			} else {
+				hasHandle = "no";
+			}
+			System.out.print(CupList.get(i).name + format(CupList.get(i).name, "Name"));
+			System.out.print(CupList.get(i).serial + format(CupList.get(i).serial + "", "Serial"));
+			System.out.print(CupList.get(i).color + format(CupList.get(i).color, "Color"));
+			System.out.print(CupList.get(i).currentFluid + format(CupList.get(i).currentFluid + "", "Fluid"));
+			System.out.print(hasHandle + format(hasHandle, "Handle"));
+			System.out.println(isBroken);
+		}
+		menu();
+	}
+	
+}
+
+
